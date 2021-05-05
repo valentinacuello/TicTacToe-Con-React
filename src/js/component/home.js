@@ -1,23 +1,58 @@
-import React from "react";
-import "../../styles/index.scss";
+import React, { useState } from "react";
+import Tablero from "./Tablero";
+import Inicio from "./Inicio";
 
 //create your first component
 export function Home() {
+	const [estaListo, setEstaListo] = useState(false);
+	const [turnoActual, setTurnoActual] = useState("");
+	const [playerUno, setPlayerUno] = useState("");
+	const [playerDos, setPlayerDos] = useState("");
+
+	const listoParaJugarO = () => {
+		setEstaListo(true);
+		setTurnoActual("O");
+	};
+
+	const listoParaJugarX = () => {
+		setEstaListo(true);
+		setTurnoActual("X");
+	};
+
+	const cambiarTurno = () => {
+		if (turnoActual == "X") {
+			setTurnoActual("O");
+		} else if (turnoActual == "O") {
+			setTurnoActual("X");
+		}
+		return turnoActual;
+	};
+
+	const cambiaPlayerUno = nombre => {
+		setPlayerUno(nombre);
+	};
+
+	const cambiaPlayerDos = nombre => {
+		setPlayerDos(nombre);
+	};
+
 	return (
-		<div className="container-juego">
-			<h1>Tic-Tac-Toe with React!</h1>
-			<h3>X wins the game!</h3>
-			<div className="grid-container">
-				<div className="grid-item cuadro1">X</div>
-				<div className="grid-item cuadro2">O</div>
-				<div className="grid-item cuadro3">X</div>
-				<div className="grid-item cuadro4">O</div>
-				<div className="grid-item cuadro5">X</div>
-				<div className="grid-item cuadro6">O</div>
-				<div className="grid-item cuadro7">X</div>
-				<div className="grid-item cuadro8">O</div>
-				<div className="grid-item cuadro9">X</div>
-			</div>
+		<div>
+			{estaListo == true ? (
+				<Tablero
+					turnoActual={turnoActual}
+					cambiarTurno={cambiarTurno}
+					playerUno={playerUno}
+					playerDos={playerDos}
+				/>
+			) : (
+				<Inicio
+					listoParaJugarO={listoParaJugarO}
+					listoParaJugarX={listoParaJugarX}
+					playerUno={cambiaPlayerUno}
+					playerDos={cambiaPlayerDos}
+				/>
+			)}
 		</div>
 	);
 }
